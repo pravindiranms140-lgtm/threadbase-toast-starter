@@ -99,3 +99,4 @@ This project delivers a **lightweight, custom toast notification system built in
   - Action buttons inside toasts (e.g., "Undo", "Retry").
   - Sound effects / haptic feedback.
   - Custom swipe gestures for touch screens.
+

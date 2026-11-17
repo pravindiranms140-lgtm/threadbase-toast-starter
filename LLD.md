@@ -194,3 +194,4 @@ stateDiagram-v2
 | **TC-4: Failed Authentication** | Input `invalid` / `wrongpass` and submit. | Red toast appears with `"Invalid username or password"`. |
 | **TC-5: Click to Dismiss** | Trigger any toast and click it within 1 second. | Toast immediately disappears from screen without waiting for 3s timer. |
 | **TC-6: Stacking Verification** | Rapidly submit form 3 times. | 3 toasts stack neatly in top-right corner without overlapping. |
+

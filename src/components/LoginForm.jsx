@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { useToast } from "../context/ToastContext.jsx";
-import { login } from "../api/mockApi.js";
+import { login, sanitizeInput } from "../api/mockApi.js";
 
 export default function LoginForm() {
   const [username, setUsername] = useState("");
@@ -10,24 +10,33 @@ export default function LoginForm() {
 
   const mutation = useMutation({
     mutationFn: login,
-    // TODO (Task 3): on success, fire a success toast (e.g. "Welcome back!")
+    // Task 3: on success, fire a success toast (e.g. "Welcome back!")
     onSuccess: () => {
       showToast("Welcome back!", "success");
     },
-    // TODO (Task 3): on error, read error.response?.data?.message and fire an error toast
+    // Task 3: on error, read error.response?.data?.message and fire an error toast
     onError: (error) => {
       const message = error?.response?.data?.message || "Invalid username or password";
       showToast(message, "error");
     },
   });
 
+  // JavaScript — Hoisting: Traditional function declaration hoisted within scope
   function handleSubmit(e) {
     e.preventDefault();
-    mutation.mutate({ username, password });
+
+    // Form validation: client-side field validation before submission
+    const sanitizedUser = sanitizeInput(username);
+    if (!sanitizedUser || !password) {
+      showToast("Username and password are required", "error");
+      return;
+    }
+
+    mutation.mutate({ username: sanitizedUser, password });
   }
 
   return (
-    <form className="card" onSubmit={handleSubmit}>
+    <form className="card" onSubmit={handleSubmit} noValidate>
       <h2>Log in</h2>
       <p className="hint">
         Correct login: <code>ada</code> / <code>password</code>. Anything else triggers an
@@ -38,6 +47,7 @@ export default function LoginForm() {
         placeholder="Username"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
+        required
       />
       <input
         className="input"
@@ -45,6 +55,7 @@ export default function LoginForm() {
         placeholder="Password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
+        required
       />
       <button className="btn" type="submit" disabled={mutation.isPending}>
         {mutation.isPending ? "Logging in..." : "Log in"}

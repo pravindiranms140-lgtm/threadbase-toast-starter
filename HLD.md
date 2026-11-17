@@ -154,3 +154,4 @@ sequenceDiagram
 - **Memory Safety:** When `dismissToast` is invoked, the target item is removed from the array. Even if a timeout triggers after early click dismissal, the immutable filter is idempotent and safe.
 - **Accessibility:** The container applies `role="status"` which maps to polite ARIA live regions, ensuring screen readers announce messages without interrupting ongoing speech.
 - **Responsive Layout:** Responsive layout limits container width to `320px` with fixed spacing, adapting gracefully to mobile viewports.
+
