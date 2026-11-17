@@ -9,5 +9,21 @@ export default function ToastContainer({ toasts, onDismiss }) {
   //   - add role="status" for accessibility
   //
   // Right now it renders nothing, so no toasts appear even when the state has them.
-  return null;
+  if (!toasts || toasts.length === 0) {
+    return null;
+  }
+
+  return (
+    <div className="toast-container" role="status">
+      {toasts.map((toast) => (
+        <div
+          key={toast.id}
+          className={`toast toast-${toast.type}`}
+          onClick={() => onDismiss(toast.id)}
+        >
+          {toast.message}
+        </div>
+      ))}
+    </div>
+  );
 }
